@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PampTube</title>
+    <style>
+        /* Основные стили */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #181818;
+            color: #fff;
+            display: flex;
+        }
+        
+        /* Боковое меню */
+        .sidebar {
+            width: 240px;
+            background-color: #202020;
+            padding: 10px;
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+        }
+        
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        
+        .sidebar a:hover {
+            background-color: #383838;
+        }
+
+        /* Основной контент */
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+        }
+
+        /* Стили для разделов видео */
+        .section-title {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .video-grid, .TekTuk-grid, .music-grid {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .video-grid {
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        }
+
+        .TekTuk-grid, .music-grid {
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        }
+        
+        /* Стили для видео (обычные видео) */
+        .video-item {
+            background-color: #282828;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .video-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .video-info {
+            padding: 10px;
+        }
+
+        .video-info h4 {
+            font-size: 1em;
+            margin: 0;
+            color: #fff;
+        }
+
+        .video-info p {
+            font-size: 0.9em;
+            color: #aaa;
+        }
+
+        .video-info .author {
+            font-size: 0.8em;
+            color: #ccc;
+            margin-top: 5px;
+        }
+
+        .video-info .author img {
+            width: 14px;
+            height: 14px;
+            vertical-align: middle;
+            margin-left: 5px;
+        }
+        
+        /* Стили для блока TekTuk */
+        .TekTuk-item {
+            background-color: #282828;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            text-align: center;
+            width: 100%;
+            height: 200px;
+            position: relative;
+        }
+
+        .TekTuk-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Подпись к TekTuk появляется при наведении */
+        .TekTuk-item .TekTuk-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 10px;
+            font-size: 0.9em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            transform: translateY(100%);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .TekTuk-item:hover .TekTuk-title {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Стили для блока Музыка */
+        .music-item {
+            background-color: #282828;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            text-align: center;
+            width: 100%;
+            height: 200px;
+            position: relative;
+        }
+
+        .music-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* Подпись к Музыке появляется при наведении */
+        .music-item .music-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 10px;
+            font-size: 0.9em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            transform: translateY(100%);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .music-item:hover .music-title {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Стили для раздела постов */
+        .post {
+            background-color: #282828;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .post h4 {
+            margin: 0 0 10px;
+            font-size: 1.2em;
+            color: #fff;
+        }
+
+        .post p {
+            font-size: 1em;
+            color: #aaa;
+        }
+
+        /* Стили для раздела "Ссылки для авторов" */
+        .links-section {
+            background-color: #282828;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .links-section h4 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .links-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .links-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .links-section a {
+            color: #1e90ff;
+            text-decoration: none;
+        }
+
+        .links-section a:hover {
+            text-decoration: underline;
+        }
+
+        /* Стили для кнопок */
+        .links-section .button {
+            display: inline-block;
+            background-color: #1e90ff;
+            color: #fff;
+            padding: 12px 20px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .links-section .button:hover {
+            background-color: #3a8dff;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Боковое меню -->
+    <div class="sidebar">
+        <a href="#main">Главная</a>
+        <a href="#TekTuk">TekTuk</a>
+        <a href="#music">Музыка</a>
+        <a href="#posts">Посты</a>
+        <a href="#links">Ссылки для авторов</a>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="content">
+        
+        <!-- Раздел с видео -->
+        <h2 id="main" class="section-title">Рекомендованные видео</h2>
+        <div class="video-grid">
+            <div class="video-item">
+                <img src="https://i.imgur.com/DnJRPmA.jpeg" alt="Видео">
+                <div class="video-info">
+                    <h4>тулбокс это капец...</h4>
+                    <p>хз сколько просмотров · хз сколько часов назад</p>
+                    <p class="author">Автор: почему2 (why2) <img src="https://lh3.googleusercontent.com/bYIJ8qC96iMlCN8uR-uv9qdShzc30A6HECSrtvNlj16cQDYaByanFeyfcqBhkkpT5Q=h36" alt="Verified"></p>
+                </div>
+            </div>
+            <div class="video-item">
+                <img src="https://i.imgur.com/QYEi2fM.png" alt="Видео">
+                <div class="video-info">
+                    <h4>ШОК!!! ЛАЙМ КРУТИТЦА!!! ЭТО ПЕРВАЯ В МИРЕ РЖАКА УГОРАКА!!!</h4>
+                    <p>нам лень делать счётчики</p>
+                    <p class="author">Автор: Фруктовая долина | Сейм</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Раздел TekTuk -->
+        <h2 id="TekTuk" class="section-title">TekTuk</h2>
+        <div class="TekTuk-grid">
+            <div class="TekTuk-item">
+                <img src="https://i.imgur.com/HoPcABP.jpeg" alt="TekTuk">
+                <div class="TekTuk-title">Сигма скибиди помни троллфейс тун тун тун, очень длинное название для теста, которое должно корректно обрезаться</div>
+            </div>
+            <div class="TekTuk-item">
+                <img src="https://i.imgur.com/CNrIx7A.jpeg" alt="TekTuk">
+                <div class="TekTuk-title">Сигма скибиди помни троллфейс тун тун тун 2</div>
+            </div>
+        </div>
+
+        <!-- Раздел Музыка -->
+        <h2 id="music" class="section-title">Музыка</h2>
+        <div class="music-grid">
+            <div class="music-item">
+                <img src="https://i.imgur.com/UH3N1X5.jpeg" alt="Музыка">
+                <div class="music-title">МАКС НА 100 - Телефон</div>
+            </div>
+            <div class="music-item">
+                <img src="https://via.placeholder.com/200x200" alt="Музыка">
+                <div class="music-title">Песня 2</div>
+            </div>
+        </div>
+
+        <!-- Раздел Посты -->
+        <h2 id="posts" class="section-title">От PampTube</h2>
+        <div class="post">
+            <h4>От PampTube</h4>
+            <p>Всё отлично работает</p>
+        </div>
+        <div class="post">
+            <h4>От PampTube</h4>
+            <p>Проверка постов</p>
+        </div>
+
+        <!-- Раздел Ссылки для авторов -->
+        <h2 id="links" class="section-title">Ссылки для авторов</h2>
+        <div class="links-section">
+            <h4>Полезные ссылки для авторов</h4>
+            <ul>
+                <li><a href="https://pamptube.fillout.com/OtgruzkaVideo" class="button">Как опубликовать видео</a></li>
+                <li><a href="https://pamptube.fillout.com/PolucheniyeGalochki" class="button">Как получить галочку <img src="https://lh3.googleusercontent.com/bYIJ8qC96iMlCN8uR-uv9qdShzc30A6HECSrtvNlj16cQDYaByanFeyfcqBhkkpT5Q=h36" alt="Verified"> на PampTube</a></li>
+                <li><a href="#" class="button">Создать пост</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+</body>
+</html>
