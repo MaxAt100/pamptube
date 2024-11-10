@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PampTube - ШОК!!! ЛАЙМ КРУТИТЦА!!! ЭТО ПЕРВАЯ В МИРЕ РЖАКА УГОРАКА!!!</title>
+    <style>
+        /* Основные стили страницы */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #181818;
+            color: #fff;
+            display: flex;
+        }
+        .sidebar {
+            width: 240px;
+            background-color: #202020;
+            padding: 10px;
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+        }
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .sidebar a:hover {
+            background-color: #383838;
+        }
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+        }
+        .custom-player {
+            position: relative;
+            width: 100%;
+            margin: 0 auto;
+            background-color: #000;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .video-element {
+            width: 100%;
+            display: block;
+        }
+        .controls {
+            position: absolute;
+            bottom: 10px;
+            width: 95%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 8px;
+            border-radius: 5px;
+        }
+        .playback-buttons button, .volume-control input[type="range"] {
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+        }
+        .progress-bar {
+            flex-grow: 1;
+            margin: 0 10px;
+            display: flex;
+            align-items: center;
+        }
+        #progress {
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            background: #383838;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .volume-control input[type="range"] {
+            width: 80px;
+            margin-left: 8px;
+        }
+        .time-display {
+            color: #ddd;
+            font-size: 14px;
+            margin: 0 8px;
+            white-space: nowrap;
+        }
+        .author {
+            color: #bbb;
+            text-align: center;
+            margin-top: 8px;
+            font-size: 14px;
+            font-style: italic;
+        }
+        /* Стили для комментариев */
+        .comments-section {
+            margin-top: 20px;
+            background-color: #202020;
+            padding: 10px;
+            border-radius: 8px;
+            color: #ddd;
+        }
+        .comment {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #2a2a2a;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .comment-author {
+            font-weight: bold;
+            color: #83c991;
+        }
+        .comment-text {
+            margin-top: 4px;
+        }
+        /* Стиль для кнопки полноэкранного режима */
+        .fullscreen-btn {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Боковое меню -->
+    <div class="sidebar">
+        <a href="https://maxat100.github.io/pamptube#main">Главная</a>
+        <a href="https://maxat100.github.io/pamptube#TekTuk">TekTuk</a>
+        <a href="https://maxat100.github.io/pamptube#music">Музыка</a>
+        <a href="https://maxat100.github.io/pamptube#posts">Посты</a>
+        <a href="https://maxat100.github.io/pamptube#links">Ссылки для авторов</a>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="content">
+        <h2>ШОК!!! ЛАЙМ КРУТИТЦА!!! ЭТО ПЕРВАЯ В МИРЕ РЖАКА УГОРАКА!!!</h2>
+        <div class="custom-player" id="customPlayer">
+            <!-- Видеоэлемент -->
+            <video id="videoPlayer" class="video-element"></video>
+            <!-- Панель управления -->
+            <div class="controls">
+                <div class="playback-buttons">
+                    <!-- Кнопки управления воспроизведением -->
+                    <button onclick="rewindVideo()">⏪ -5s</button>
+                    <button onclick="togglePlayPause()">⏯</button>
+                    <button onclick="fastForwardVideo()">+5s ⏩</button>
+                </div>
+                <div class="progress-bar">
+                    <!-- Прогресс видео -->
+                    <span class="time-display" id="currentTime">0:00</span>
+                    <input type="range" id="progress" min="0" max="100" step="0.1" value="0" onchange="seekVideo(this.value)">
+                    <span class="time-display" id="duration">0:00</span>
+                </div>
+                <div class="volume-control">
+                    <!-- Регулятор громкости -->
+                    <label for="volume">🔊</label>
+                    <input type="range" id="volume" min="0" max="1" step="0.1" onchange="setVolume(this.value)">
+                </div>
+                <!-- Кнопка полноэкранного режима с изменяемой иконкой -->
+                <img id="fullscreenIcon" class="fullscreen-btn" src="https://fonts.gstatic.com/s/i/short-term/release/materialsymbolsoutlined/fullscreen/fill1/48px.svg" onclick="toggleFullscreen()">
+            </div>
+        </div>
+        <!-- Подпись автора -->
+        <div class="author">От Фруктовая долина | Сейм</div>
+
+        <!-- Раздел комментариев -->
+<div class="comments-section">
+    <h3>Комментарии</h3>
+    
+    <!-- Фейковые комментарии -->
+    <div class="comment">
+        <img class="comment-avatar" src="https://i.pinimg.com/736x/db/08/6c/db086cabdedd09ae5436576b2f9fbe0c.jpg" alt="avatar">
+        <div>
+            <span class="comment-author">PampTeam</span>
+            <p class="comment-text">Да, комментарии не настоящие.</p>
+        </div>
+    </div>
+    
+    <div class="comment">
+        <img class="comment-avatar" src="https://i.pinimg.com/736x/db/08/6c/db086cabdedd09ae5436576b2f9fbe0c.jpg" alt="avatar">
+        <div>
+            <span class="comment-author">GreenFan</span>
+            <p class="comment-text">Этот эффект вращения просто гипнотизирует.</p>
+        </div>
+    </div>
+
+    <div class="comment">
+        <img class="comment-avatar" src="https://i.pinimg.com/736x/db/08/6c/db086cabdedd09ae5436576b2f9fbe0c.jpg" alt="avatar">
+        <div>
+            <span class="comment-author">FruitGuru</span>
+            <p class="comment-text">LimeTime — новый бренд? Уже фанат! 😄</p>
+        </div>
+    </div>
+
+    <div class="comment">
+        <img class="comment-avatar" src="https://i.pinimg.com/736x/db/08/6c/db086cabdedd09ae5436576b2f9fbe0c.jpg" alt="avatar">
+        <div>
+            <span class="comment-author">VitaminCSeeker</span>
+            <p class="comment-text">Видео о токе и лаймах — неожиданный, но классный контент!</p>
+        </div>
+    </div>
+
+    <div class="comment">
+        <img class="comment-avatar" src="https://i.pinimg.com/736x/db/08/6c/db086cabdedd09ae5436576b2f9fbe0c.jpg" alt="avatar">
+        <div>
+            <span class="comment-author">ElectricVibe</span>
+            <p class="comment-text">Уже пересматриваю второй раз, музыка и видео идеально сочетаются.</p>
+        </div>
+    </div>
+
+    <div class="comment">
+        <img class="comment-avatar" src="https://i.pinimg.com/736x/db/08/6c/db086cabdedd09ae5436576b2f9fbe0c.jpg" alt="avatar">
+        <div>
+            <span class="comment-author">JuiceMaster</span>
+            <p class="comment-text">Я бы никогда не подумал, что лайм может быть такой звездой.</p>
+        </div>
+    </div>
+
+    <div class="comment">
+        <img class="comment-avatar" src="https://i.pinimg.com/736x/db/08/6c/db086cabdedd09ae5436576b2f9fbe0c.jpg" alt="avatar">
+        <div>
+            <span class="comment-author">CoolCitrus</span>
+            <p class="comment-text">Смотрю это каждый день перед работой, настраивает на позитив! 🍋</p>
+        </div>
+    </div>
+
+    <div class="comment">
+        <img class="comment-avatar" src="https://i.pinimg.com/736x/db/08/6c/db086cabdedd09ae5436576b2f9fbe0c.jpg" alt="avatar">
+        <div>
+            <span class="comment-author">LimeLover</span>
+            <p class="comment-text">Один лайм может сделать день ярче! Спасибо за видео!</p>
+        </div>
+    </div>
+
+    <div class="comment">
+        <img class="comment-avatar" src="https://i.pinimg.com/736x/db/08/6c/db086cabdedd09ae5436576b2f9fbe0c.jpg" alt="avatar">
+        <div>
+            <span class="comment-author">SunnySide</span>
+            <p class="comment-text">Кто-то еще почувствовал цитрусовую магию в этом видео? 🍈✨</p>
+        </div>
+    </div>
+
+    <div class="comment">
+        <img class="comment-avatar" src="https://i.pinimg.com/736x/db/08/6c/db086cabdedd09ae5436576b2f9fbe0c.jpg" alt="avatar">
+        <div>
+            <span class="comment-author">NatureNinja</span>
+            <p class="comment-text">Мне кажется, что лайм уже почти стал мемом! 😂</p>
+        </div>
+    </div>
+
+    <div class="comment">
+        <img class="comment-avatar" src="https://i.pinimg.com/736x/db/08/6c/db086cabdedd09ae5436576b2f9fbe0c.jpg" alt="avatar">
+        <div>
+            <span class="comment-author">ZestyZen</span>
+            <p class="comment-text">Это видео делает жизнь сочнее, лайм рулит! 🌟</p>
+        </div>
+    </div>
+</div>
+
+    <!-- Подключение Dash.js и настройка плеера -->
+    <script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
+    <script>
+        // URL видео для Dash.js
+        var url = 'https://raw.githubusercontent.com/MaxAt100/pamptube/refs/heads/main/video/video-001/your-video.mpd';
+        var video = document.getElementById('videoPlayer');
+        var player = dashjs.MediaPlayer().create();
+        player.initialize(video, url, true);
+
+        // Функция для переключения воспроизведения и паузы
+        function togglePlayPause() {
+            if (video.paused) {
+                video.play();
+            } else {
+                video.pause();
+            }
+        }
+
+        // Перемотка видео на 5 секунд назад
+        function rewindVideo() {
+            video.currentTime -= 5;
+        }
+
+        // Перемотка видео на 5 секунд вперёд
+        function fastForwardVideo() {
+            video.currentTime += 5;
+        }
+
+        // Перемещение по видео при изменении позиции ползунка прогресса
+        function seekVideo(value) {
+            video.currentTime = video.duration * value / 100;
+        }
+
+        // Установка громкости видео
+        function setVolume(value) {
+            video.volume = value;
+        }
+
+        // Обновление прогресса видео
+        video.addEventListener('timeupdate', function() {
+            var currentTime = document.getElementById('currentTime');
+            currentTime.textContent = formatTime(video.currentTime);
+            var progress = document.getElementById('progress');
+            progress.value = (video.currentTime / video.duration) * 100;
+        });
+
+        // Обновление продолжительности видео
+        video.addEventListener('durationchange', function() {
+            var duration = document.getElementById('duration');
+            duration.textContent = formatTime(video.duration);
+        });
+
+        // Форматирование времени в формат "минуты:секунды"
+        function formatTime(seconds) {
+            var minutes = Math.floor(seconds / 60);
+            var seconds = Math.floor(seconds % 60);
+            return minutes + ':' + (seconds < 10 ? '0' + seconds : seconds);
+        }
+
+        // Функция для переключения полноэкранного режима
+        function toggleFullscreen() {
+            var playerContainer = document.getElementById('customPlayer');
+            var fullscreenIcon = document.getElementById('fullscreenIcon');
+            if (!document.fullscreenElement) {
+                // Вход в полноэкранный режим
+                playerContainer.requestFullscreen().then(() => {
+                    fullscreenIcon.src = "https://fonts.gstatic.com/s/i/short-term/release/materialsymbolsoutlined/close_fullscreen/fill1/48px.svg";
+                }).catch(err => {
+                    alert(`Ошибка при попытке полноэкранного режима: ${err.message}`);
+                });
+            } else {
+                // Выход из полноэкранного режима
+                document.exitFullscreen().then(() => {
+                    fullscreenIcon.src = "https://fonts.gstatic.com/s/i/short-term/release/materialsymbolsoutlined/fullscreen/fill1/48px.svg";
+                });
+            }
+        }
+    </script>
+</body>
+</html>
