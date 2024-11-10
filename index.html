@@ -6,29 +6,16 @@
     <title>PampTube</title>
     <style>
         /* Основные стили */
+        /* Основные стили */
         body {
             margin: 0;
             font-family: Arial, sans-serif;
             background-color: #181818;
             color: #fff;
             display: flex;
-            flex-direction: column; /* Изменено для адаптации уведомления */
+            flex-direction: column;
         }
-        
-        /* Всплывающее уведомление */
-        .mobile-warning {
-            display: none;
-            background-color: #ffcc00;
-            color: #000;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            font-weight: bold;
-        }
-        
+
         /* Боковое меню */
         .sidebar {
             width: 240px;
@@ -37,7 +24,7 @@
             height: 100vh;
             position: fixed;
             overflow-y: auto;
-            margin-top: 50px; /* Для учета уведомления */
+            margin-top: 50px; /* Учитываем потенциальное уведомление */
         }
 
         .sidebar a {
@@ -57,7 +44,21 @@
             margin-left: 250px;
             padding: 20px;
             width: calc(100% - 250px);
-            margin-top: 50px; /* Учитываем высоту уведомления */
+            margin-top: 50px;
+        }
+
+        /* Стили для всплывающего окна */
+        .mobile-warning {
+            display: none;
+            background-color: #ffcc00;
+            color: #000;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            font-weight: bold;
         }
     
         /* Боковое меню */
@@ -312,10 +313,13 @@
         .links-section .button:hover {
             background-color: #3a8dff;
         }
-    </style>
-        
+    </style>     
 </head>
 <body>
+    <!-- Всплывающее окно для мобильных пользователей -->
+    <div id="mobileWarning" class="mobile-warning">
+        Сайт пока что некорректно работает на мобильных устройствах. Откройте сайт в режиме ПК.
+    </div>
 
     <!-- Боковое меню -->
     <div class="sidebar">
